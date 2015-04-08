@@ -1,0 +1,2 @@
+C:\Users\cssuser\Documents\CIS 3334 Android Development\AndroidGPSLocation\app\build\intermediates\classes\debug
+C:\Users\cssuser\Documents\CIS 3334 Android Development\AndroidGPSLocation\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-9d62ff9b6a4486281475e823a06b3f41351e225d.jar
