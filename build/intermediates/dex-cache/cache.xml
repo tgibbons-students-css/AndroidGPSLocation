@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\cssuser\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jar="C:\Users\LABmin.STORMS\android-sdks\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
-        <dex dex="C:\Users\cssuser\Documents\CIS 3334 Android Development\AndroidGPSLocation\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-9d62ff9b6a4486281475e823a06b3f41351e225d.jar" />
+        <dex dex="C:\Users\LABmin.STORMS\Desktop\AndroidGPSLocation\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-4cb93101d080a0c4439a55b651a9e240377ef8d1.jar" />
     </item>
 
 </items>

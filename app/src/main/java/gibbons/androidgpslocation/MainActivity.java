@@ -1,5 +1,10 @@
 package gibbons.androidgpslocation;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -12,7 +17,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+
+public class MainActivity extends Activity implements SensorEventListener {
+
+    private SensorManager senSensorManager;
+    private Sensor senAccelerometer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,53 +60,31 @@ public class MainActivity extends Activity {
         Log.v("Gibbons","setting location updates from GPS provider");
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
+
+        senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        senSensorManager.registerListener(this, senAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
+
     }
 
 
-	  public void OnClick (View v) {
-		  
-		  // Remember to use the gps add the following permission to AndriodManifest.xml
-		  // <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-		  // To use the wireless for location add
-		  // <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-		  // <uses-permission android:name="android.permission.INTERNET" />
-		  
-		    LocationManager mgr = (LocationManager)getSystemService(LOCATION_SERVICE);
-		    Location loc;			// location from GPS or other provider
-		    
-		  // Retrieve a list of location providers that have fine accuracy, no monetary cost, etc
-		    Criteria criteria = new Criteria();
-		    //criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		    //criteria.setCostAllowed(false);
-		    String providerName = mgr.getBestProvider(criteria, true);
 
-		    // If no suitable provider is found, null is returned.
-		    if (providerName != null) {
-		    	Toast.makeText(getApplicationContext(),"No good location provider found, trying GPS by default", Toast.LENGTH_LONG).show();
-		    	Log.v("Gibbons", "No good location provider found, trying GPS by default");
-		    	loc = mgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		    	//loc = mgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		    } else {
-		    	loc = mgr.getLastKnownLocation(providerName);
-		    }
-		    
-		    TextView tvLoc = (TextView) findViewById(R.id.textView1);
-		    if (loc == null) {
-		      Log.v("Gibbons", "Got null for getLastKnownLocation()");
-		      tvLoc.setText("No location found");
-		    }
-		    else {
-		        String locStr = String.format("%s %f:%f (%f meters)", loc.getProvider(),
-	    				  loc.getLatitude(), loc.getLongitude(), loc.getAccuracy());
-		    	tvLoc.setText(locStr);
-		    	Log.v("Gibbons",locStr);
-		    }
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Sensor mySensor = sensorEvent.sensor;
 
+        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
+            TextView tvLoc = (TextView) findViewById(R.id.textView2);
+            String xyzStr = String.format("Position: %f:%f %f ", x,y,z);
+            tvLoc.setText(xyzStr);
+        }
+    }
 
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
 
-
-	  
-	  }
-		   
-
+    }
 }
